@@ -1,28 +1,28 @@
-import { Seguro_Vida } from "./Seguros/Seguro_Vida";
-import { Seguro_Jubilacion } from "./Seguros/Seguro_Jubilacion";
-import { Seguro_Robo } from "./Seguros/Seguro_Robo";
+import { SeguroVida } from "./Seguros/Seguro_Vida";
+import { SeguroJubilacion } from "./Seguros/Seguro_Jubilacion";
+import { SeguroRobo } from "./Seguros/Seguro_Robo";
 import { CalculateSeguro, VisitorSeguros } from "./VisitorSeguros";
 import { ISeguros } from "./Seguros/ISeguros";
 
 export class ReportVisitor implements VisitorSeguros {
-  
-  public visitor(_seguro: Seguro_Vida): CalculateSeguro;
-  public visitor(_seguro: Seguro_Robo): CalculateSeguro;
-  public visitor(_seguro: Seguro_Jubilacion): CalculateSeguro;
-  public visitor(_seguro: ISeguros): CalculateSeguro{
-    
+
+  public visit(_seguro: SeguroVida): CalculateSeguro;
+  public visit(_seguro: SeguroRobo): CalculateSeguro;
+  public visit(_seguro: SeguroJubilacion): CalculateSeguro;
+  public visit(_seguro: ISeguros): CalculateSeguro {
+
     const valor = _seguro.calcularSeguro();
 
     let nombre = '';
-    if(_seguro instanceof  Seguro_Vida){
+    if (_seguro instanceof SeguroVida)
       nombre = 'Seguro de vida';
-    }
-    if(_seguro instanceof  Seguro_Robo){
+
+    if (_seguro instanceof SeguroRobo)
       nombre = 'Seguro de robo';
-    }
-    if(_seguro instanceof  Seguro_Jubilacion){
+
+    if (_seguro instanceof SeguroJubilacion)
       nombre = 'Seguro de jubilacion';
-    }
+
 
     return {
       nombre,
@@ -30,12 +30,4 @@ export class ReportVisitor implements VisitorSeguros {
     }
   }
 
-
-  public calcularTotal(itemsList: ISeguros[]): CalculateSeguro[] {
-    const reports: CalculateSeguro[] = [];
-    itemsList.forEach((insurance) => {
-      reports.push(insurance.accept(this));
-    });
-    return reports;
-  }
 }

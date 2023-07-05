@@ -6,5 +6,5 @@ export interface CalculateSeguro {
 }
 
 export interface VisitorSeguros {
-  visitor(lifeInsurance: ISeguros): CalculateSeguro;
+  visit(_seguro: ISeguros): CalculateSeguro;
 }
