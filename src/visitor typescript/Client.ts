@@ -13,15 +13,13 @@ interface ObjetSeguros {
 
 export class Client {
     public run(seguros: ObjetSeguros): CalculateSeguro[] {
-        const list: ISeguros[] = [];
+        const listSeguros: ISeguros[] = [];
 
-        seguros.vida && list.push(new SeguroVida());
-        seguros.jubilacion && list.push(new SeguroJubilacion());
-        seguros.robo && list.push(new SeguroRobo());
+        seguros.vida && listSeguros.push(new SeguroVida());
+        seguros.jubilacion && listSeguros.push(new SeguroJubilacion());
+        seguros.robo && listSeguros.push(new SeguroRobo());
 
-        const reports: CalculateSeguro[] = [];
-        list.forEach(seguro => reports.push(seguro.accept(new ReportVisitor())));
-        return reports
+        return listSeguros.map(seguro => seguro.accept(new ReportVisitor()));
     }
 
 }
